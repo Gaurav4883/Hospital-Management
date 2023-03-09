@@ -20,6 +20,7 @@
 
         input[type="date"],
         input[type="time"],
+        input[type="email"],
         select {
             padding: 5px;
             border-radius: 5px;
@@ -77,10 +78,12 @@
 <body>
     <div class="head">
         <h1>Appointment Registration Form </h1>
-        <a href="/login"><button>Back</button></a>
     </div>
 
     <form action="/appointment/register" method="POST">
+        <label for="email">Email:</label>
+        <input style="margin-bottom: 12px;" type="email" id="email" name="email" required>
+
         <label for="appointment-date">Appointment Date:</label>
         <input type="date" id="appointment-date" name="appointmentDate" required>
 

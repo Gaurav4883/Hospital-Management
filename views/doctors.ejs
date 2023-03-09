@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>List of Doctors</title>
+</head>
+
+<body>
+    <h1>List of Doctors</h1>
+    <ul>
+        <% doctors.forEach(function(doctor) { %>
+            <li>
+                <h2>
+                    <%= doctor.fullName %>
+                </h2>
+                <p><strong>Specialization:</strong>
+                    <%= doctor.specialization %>
+                </p>
+                <p><strong>Email:</strong>
+                    <%= doctor.email %>
+                </p>
+            </li>
+            <% }) %>
+    </ul>
+</body>
+
+</html>

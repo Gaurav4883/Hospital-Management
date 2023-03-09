@@ -4,7 +4,6 @@ const dotenv = require("dotenv").config()
 const { default: helmet } = require("helmet")
 const app = express()
 const PORT = 5000
-const middlewares = require("./src/middleware.js")
 const jwt = require("jsonwebtoken")
 const passport = require("passport")
 require("./src/auth/passport.js")
@@ -34,9 +33,7 @@ app.get('/', (req, res) => {
 // Book Appointment
 // ------------------------GET--------------------------------------------------
 // IT DIDn't work on browser 
-// app.get('/appointment/register', 
-// passport.authenticate('jwt', 
-//  { session: false }), async (req, res) => {
+// app.get('/appointment/register', passport.authenticate('jwt', { session: false }), async (req, res) => {
 //     if (req.user.role === 'patient') {
 //         const doctors = await Doctor.findAll();
 //         res.render('appointment.ejs', { doctors })
@@ -51,19 +48,26 @@ app.get('/appointment/register', async (req, res) => {
     res.render('appointment.ejs', { doctors })
 })
 // ------------------------POST------------------------------------------------
-app.post('/appointment/register', passport.authenticate('jwt', { session: false }), async (req, res) => {
-    const { doctorId, appointmentDate, startTime, endTime } = req.body;
+app.post('/appointment/register', async (req, res) => {
+    const { email, doctorId, appointmentDate, startTime, endTime } = req.body;
+
     try {
+        // Search for the patient by email
+        const patient = await Patient.findOne({ where: { email } });
+        if (!patient) {
+            return res.render('patient_dashboard.ejs', { message: "Patient not found." });
+        }
         const appointment = await Appointment.create({
             doctorId,
-            patientId: req.user.id,
+            patientId: patient.id, // Use the patient's id
             appointmentDate,
             startTime,
             endTime
         });
+
         if (appointment) {
-            const jwtToken = jwt.sign({ id: appointment.id, role: 'appointment' }, process.env.JWT_SECRET, { expiresIn: '30m' });
-            return res.render('patient_dashboard.ejs', { message: "Appointment booked successfully!", jwtToken });
+            // const jwtToken = jwt.sign({ id: appointment.id, role: 'appointment' }, process.env.JWT_SECRET, { expiresIn: '30m' });
+            return res.render('patient_dashboard.ejs', { message: "Appointment booked successfully!" });
         } else {
             return res.render('patient_dashboard.ejs', { message: "Unable to book appointment." });
         }
@@ -71,9 +75,34 @@ app.post('/appointment/register', passport.authenticate('jwt', { session: false 
         console.error(err);
         return res.json({ message: 'Server error' });
     }
-
 })
 
+app.get("/myappointments", async (req, res) => {
+    const appointments = await Appointment.findAll();
+    res.render('myappt.ejs', { appointments })
+})
+
+app.get("/logout", (req, res) => {
+    res.redirect('/login')
+})
+app.get('/doctors', async (req, res) => {
+    try {
+        const doctors = await Doctor.findAll();
+        res.render('doctors.ejs', { doctors });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal server error');
+    }
+});
+app.get('/patients', async (req, res) => {
+    try {
+        const patients = await Patient.findAll();
+        res.render('patients.ejs', { patients });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal server error');
+    }
+});
 
 
 
@@ -92,7 +121,7 @@ app.post('/login', async (req, res) => {
             const jwtToken = jwt.sign({ id: user.id, email: user.email, role: 'patient' }, process.env.JWT_SECRET, { expiresIn: '30m' })
             console.log(jwtToken);
             return res.render('patient_dashboard.ejs', { message: "Successfully logged in !" })
-
+            // return res.json(jwtToken)
         }
         user = await Doctor.findOne({ where: { email, password } });
         if (user) {
