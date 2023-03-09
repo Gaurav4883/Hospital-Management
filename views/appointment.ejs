@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Appointment Registration Form</title>
+    <style>
+        h1 {
+            text-align: center;
+        }
+
+        form {
+            width: 30%;
+            margin: 0 auto;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        input[type="date"],
+        input[type="time"],
+        select {
+            padding: 5px;
+            border-radius: 5px;
+            border: 1px solid #000000;
+            font-size: 16px;
+            width: 90%;
+        }
+
+        select {
+            width: 93%;
+        }
+
+        button[type="submit"] {
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            width: 140px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-left: 130px;
+            margin-top: 20px;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #3e8e41;
+        }
+
+        .head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+        }
+
+        .head h1 {
+            text-align: center;
+            margin-left: 31%;
+        }
+
+        .head button {
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="head">
+        <h1>Appointment Registration Form </h1>
+        <a href="/login"><button>Back</button></a>
+    </div>
+
+    <form action="/appointment/register" method="POST">
+        <label for="appointment-date">Appointment Date:</label>
+        <input type="date" id="appointment-date" name="appointmentDate" required>
+
+        <br><br>
+
+        <label for="start-time">Start Time:</label>
+        <input type="time" id="start-time" name="startTime" required>
+
+        <br><br>
+
+        <label for="end-time">End Time:</label>
+        <input type="time" id="end-time" name="endTime" required>
+
+        <br><br>
+
+        <label for="doctor">Doctor:</label>
+        <select id="doctor" name="doctorId" required>
+            <option value="" disabled selected>Select a doctor</option>
+            <% doctors.forEach(doctor=>{ %>
+                <option value="<%= doctor.id %>">
+                    <%= doctor.fullName %> (<%= doctor.specialization %>)
+                </option>
+                <% }) %>
+        </select>
+
+        <br><br>
+
+        <button type="submit">Submit</button>
+    </form>
+
+</body>
+
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Doctor Dashboard - Hospital Management System</title>
+    <style>
+        header {
+            background-color: #453d3d;
+            color: #fff;
+            display: flex;
+            justify-content: space-between;
+            padding: 1rem;
+        }
+
+        /* Styles for navbar */
+        nav {
+            color: #fff;
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            text-decoration: none;
+            color: #fff;
+            margin-left: 570px;
+        }
+
+        ul {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        li {
+            margin-left: 20px;
+        }
+
+        a {
+            color: #fff;
+            text-decoration: none;
+            transition: color 0.2s ease-in-out;
+        }
+
+        a:hover {
+            color: #ddd;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#"> Appointments</a></li>
+                <li><a href="#">Patient List</a></li>
+                <li><a href="#">My Profile</a></li>
+                <li><a href="/logout">Logout</a></li>
+                <a class="logo">Doctor Dashboard</a>
+            </ul>
+        </nav>
+    </header>
+    <h1>Welcome Doctor</h1>
+    <h2>Patient List</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Patient ID</th>
+                <th>Patient Name</th>
+                <th>Age</th>
+                <th>Gender</th>
+                <th>Diagnosis</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1001</td>
+                <td>John Smith</td>
+                <td>35</td>
+                <td>Male</td>
+                <td>Flu</td>
+            </tr>
+            <tr>
+                <td>1002</td>
+                <td>Jane Doe</td>
+                <td>45</td>
+                <td>Female</td>
+                <td>High Blood Pressure</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>Appointment Schedule</h2>
+    <ul>
+        <li>Monday, 10:00am - John Smith</li>
+        <li>Tuesday, 2:00pm - Jane Doe</li>
+    </ul>
+
+
+
+</body>
+
+</html>
