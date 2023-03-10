@@ -202,10 +202,6 @@ app.post('/doctor/register', async (req, res) => {
 
 })
 
-// app.use(middlewares.notFound)
-// app.use(middlewares.errorHandler)
-
-
 // Listening on express app we created
 app.listen(PORT, () => {
     console.log(`Listening on port ${PORT}`)
